@@ -1,0 +1,95 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Support | Eg Elisée Lathro</title>
+<meta name="description" content="Write-up de la machine HackTheBox Support, Windows, difficulté facile, par Eg Elisée Lathro.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&amp;family=JetBrains+Mono:wght@400;500&amp;display=swap" rel="stylesheet">
+<link rel="stylesheet" href="../css/style.css">
+</head>
+<body>
+
+<header class="topbar">
+  <div class="topbar-inner">
+    <a class="wordmark" href="../index.html">
+      <span class="mark" aria-hidden="true">EL</span>
+      <span><strong>Eg Elisée Lathro</strong> <span class="sep">|</span> Carnet de cybersécurité</span>
+    </a>
+    <button class="nav-toggle" aria-expanded="false">Menu</button>
+    <nav class="tabs" aria-label="Navigation principale">
+      <a href="../index.html">Qui suis-je</a>
+      <a href="../travaux.html">Projets et TP</a>
+      <a href="../htb-adventure.html" aria-current="page">Aventure HackTheBox</a>
+      <a href="../certifications.html">Certifications</a>
+    </nav>
+  </div>
+</header>
+
+<div class="container">
+  <a class="back-link" href="../htb-adventure.html">← Retour aux rapports</a>
+  <header class="page-head">
+    <ul class="tags">
+      <li class="tag blue">Windows</li>
+      <li class="tag">Facile</li>
+      <li class="tag">Active Directory</li>
+    </ul>
+    <h1>Support</h1>
+    <p class="lede">La seule machine Windows de la série, et celle qui rejoint le plus mes TP sur Active Directory. On y passe d'un partage ouvert à un contrôle complet du contrôleur de domaine.</p>
+  </header>
+
+  <hr>
+
+  <main class="article-body">
+    <h2>La chaîne en cinq lignes</h2>
+    <p>
+      Le résumé avant le détail, pour que quelqu'un qui ne fera pas la machine comprenne
+      quand même de quoi il s'agit.
+    </p>
+    <ul class="prose">
+      <li>Un partage SMB accessible sans authentification</li>
+      <li>Un exécutable déposé sur ce partage, qui interroge l'annuaire LDAP</li>
+      <li>Le mot de passe de liaison LDAP, récupérable par rétro-ingénierie, analyse réseau ou émulation</li>
+      <li>Un mot de passe laissé dans un champ de description de compte, exploitable en WinRM</li>
+      <li>Une relation d'objets révélée par BloodHound, puis une délégation contrainte basée sur les ressources</li>
+    </ul>
+
+    <h2>Reconnaissance</h2>
+    <p class="draft">En cours de rédaction</p>
+
+    <h2>Le partage SMB</h2>
+    <p class="draft">En cours de rédaction</p>
+
+    <h2>Récupérer le mot de passe de liaison</h2>
+    <p class="draft">En cours de rédaction</p>
+
+    <h2>Énumération LDAP</h2>
+    <p class="draft">En cours de rédaction</p>
+
+    <h2>Élévation de privilèges</h2>
+    <p class="draft">En cours de rédaction</p>
+
+    <h2>Ce que j'en retiens</h2>
+    <p class="draft">En cours de rédaction</p>
+
+  </main>
+</div>
+
+<footer>
+  <div class="container">
+    <div class="footer-links">
+      <a href="../index.html">Qui suis-je</a>
+      <a href="../travaux.html">Projets et TP</a>
+      <a href="../htb-adventure.html">Aventure HackTheBox</a>
+      <a href="../certifications.html">Certifications</a>
+      <a href="mailto:elisee.lathro@gmail.com">Email</a>
+    </div>
+    <p class="footer-note">Paris, France</p>
+  </div>
+</footer>
+
+<script src="../js/main.js"></script>
+</body>
+</html>

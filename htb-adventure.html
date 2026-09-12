@@ -1,0 +1,182 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Aventure HackTheBox | Eg Elisée Lathro</title>
+<meta name="description" content="Journal de progression d'Eg Elisée Lathro sur HackTheBox : parcours Starting Point et write-ups de machines retirées.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&amp;family=JetBrains+Mono:wght@400;500&amp;display=swap" rel="stylesheet">
+<link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+
+<header class="topbar">
+  <div class="topbar-inner">
+    <a class="wordmark" href="index.html">
+      <span class="mark" aria-hidden="true">EL</span>
+      <span><strong>Eg Elisée Lathro</strong> <span class="sep">|</span> Carnet de cybersécurité</span>
+    </a>
+    <button class="nav-toggle" aria-expanded="false">Menu</button>
+    <nav class="tabs" aria-label="Navigation principale">
+      <a href="index.html">Qui suis-je</a>
+      <a href="travaux.html">Projets et TP</a>
+      <a href="htb-adventure.html" aria-current="page">Aventure HackTheBox</a>
+      <a href="certifications.html">Certifications</a>
+    </nav>
+  </div>
+</header>
+
+<div class="container">
+  <header class="page-head">
+    <span class="page-icon" aria-hidden="true">🧩</span>
+    <h1>Aventure HackTheBox</h1>
+    <p class="lede">
+      Le journal de ma progression, du parcours Starting Point aux machines retirées.
+      HackTheBox n'autorise la publication d'un write-up que lorsque la machine est
+      retirée, donc les machines encore actives apparaissent ici sans détail de résolution.
+    </p>
+    <ul class="props">
+      <li><span class="k">Starting Point</span><span class="v"><strong>Terminé</strong>, Tier 0 à Tier 2</span></li>
+      <li><span class="k">Machines résolues</span><span class="v">13 actives, 4 retirées</span></li>
+      <li><span class="k">Rapports</span><span class="v">6 en cours de rédaction</span></li>
+    </ul>
+  </header>
+
+  <hr>
+
+  <main>
+    <p>
+      J'ai commencé par Starting Point parce que je voulais une progression ordonnée plutôt
+      que de me jeter sur une machine au hasard et d'abandonner au bout d'une heure. Les
+      trois tiers couvrent la reconnaissance, l'exploitation simple, puis les chaînes
+      d'attaque en plusieurs étapes avec élévation de privilèges.
+    </p>
+
+    <h3>Tier 0, Foundations</h3>
+    <ul class="machines">
+      <li>Meow</li><li>Fawn</li><li>Dancing</li><li>Redeemer</li>
+    </ul>
+
+    <h3>Tier 1, Fundamental Exploitation</h3>
+    <ul class="machines">
+      <li>Appointment</li><li>Sequel</li><li>Crocodile</li><li>Responder</li><li>Three</li>
+    </ul>
+
+    <h3>Tier 2, Multi-Step Attacks and Privilege Escalation</h3>
+    <ul class="machines">
+      <li>Vaccine</li><li>Oopsie</li><li>Archetype</li><li>Unified</li>
+    </ul>
+
+    <h2>Les rapports</h2>
+    <p>
+      Six machines dont je rédige le déroulé complet. Chaque page commence par un résumé de
+      la chaîne d'attaque, pour que la lecture reste utile même sans avoir fait la machine,
+      puis suit mon cheminement étape par étape.
+    </p>
+
+    <article class="report">
+      <ul class="tags">
+        <li class="tag blue">Linux</li>
+        <li class="tag">Facile</li>
+      </ul>
+      <h3><a href="articles/cap.html">Cap</a></h3>
+      <p>Trois services exposés, FTP, SSH et un serveur web d'administration, puis une capability linux posée sur un binaire, qui suffit à devenir root</p>
+      <p class="draft">Rapport en cours de rédaction</p>
+    </article>
+
+    <article class="report">
+      <ul class="tags">
+        <li class="tag blue">Linux</li>
+        <li class="tag">Starting Point, Tier 2</li>
+      </ul>
+      <h3><a href="articles/unified.html">Unified</a></h3>
+      <p>Un portail UniFi Network exposé derrière un proxy HTTP, puis le panneau d'administration livre ensuite un mot de passe ssh</p>
+      <p class="draft">Rapport en cours de rédaction</p>
+    </article>
+
+    <article class="report">
+      <ul class="tags">
+        <li class="tag blue">Linux</li>
+        <li class="tag">Facile</li>
+      </ul>
+      <h3><a href="articles/twomillion.html">TwoMillion</a></h3>
+      <p>Un JavaScript obfusqué côté client, qui cache la logique de génération du code d'invitation, puis un fichier .env avec des identifiants réutilisés, puis un noyau obsolète et cve-2023-0386</p>
+      <p class="draft">Rapport en cours de rédaction</p>
+    </article>
+
+    <article class="report">
+      <ul class="tags">
+        <li class="tag blue">Windows</li>
+        <li class="tag">Facile</li>
+      </ul>
+      <h3><a href="articles/support.html">Support</a></h3>
+      <p>Un partage SMB accessible sans authentification, puis une relation d'objets révélée par bloodhound, puis une délégation contrainte basée sur les ressources</p>
+      <p class="draft">Rapport en cours de rédaction</p>
+    </article>
+
+    <article class="report">
+      <ul class="tags">
+        <li class="tag blue">Linux</li>
+        <li class="tag">Très facile</li>
+      </ul>
+      <h3><a href="articles/orion.html">Orion</a></h3>
+      <p>Un domaine à résoudre localement avant de pouvoir atteindre le site, puis une version vulnérable de telnetd, cve-2026-24061, qui permet un contournement d'authentification</p>
+      <p class="draft">Rapport en cours de rédaction</p>
+    </article>
+
+    <article class="report">
+      <ul class="tags">
+        <li class="tag blue">Linux</li>
+        <li class="tag">Facile</li>
+      </ul>
+      <h3><a href="articles/nexus.html">Nexus</a></h3>
+      <p>Un service Gitea exposé, dont un dépôt laisse fuiter des identifiants, puis un service de synchronisation de templates vulnérable au path traversal, qui mène à root</p>
+      <p class="draft">Rapport en cours de rédaction</p>
+    </article>
+
+    <h2>Le lien avec les cours</h2>
+    <p>
+      Ces machines ne sont pas un loisir séparé du reste. Cap repose sur une capability
+      Linux mal posée, exactement le sujet de l'atelier d'élévation de privilèges. Support
+      se termine sur une attribution de droits trop large dans Active Directory, ce que le
+      modèle AGDLP vu en TP existe précisément pour éviter. Orion et TwoMillion tournent
+      autour d'identifiants réutilisés et d'API mal protégées, les deux failles que j'ai
+      documentées dans l'audit FinSecure. La différence tient au format : le TP explique une
+      méthode, le write-up raconte une résolution, fausses pistes comprises.
+    </p>
+    <div class="callout">
+      <span class="ico" aria-hidden="true">📄</span>
+      <div>
+        <p><strong>La théorie derrière ces machines</strong></p>
+        <p><a href="travaux.html">Ouvrir les projets et TP</a></p>
+      </div>
+    </div>
+
+    <h2>Sur les write-ups officiels</h2>
+    <p>
+      Les rapports publiés ici sont les miens. Quand je me suis appuyé sur le write-up
+      officiel de HackTheBox pour débloquer un passage, je le dis dans la section concernée.
+      Ces documents officiels appartiennent à HackTheBox et ne sont pas redistribués sur ce
+      site.
+    </p>
+  </main>
+</div>
+
+<footer>
+  <div class="container">
+    <div class="footer-links">
+      <a href="index.html">Qui suis-je</a>
+      <a href="travaux.html">Projets et TP</a>
+      <a href="htb-adventure.html">Aventure HackTheBox</a>
+      <a href="certifications.html">Certifications</a>
+      <a href="mailto:elisee.lathro@gmail.com">Email</a>
+    </div>
+    <p class="footer-note">Paris, France</p>
+  </div>
+</footer>
+
+<script src="js/main.js"></script>
+</body>
+</html>

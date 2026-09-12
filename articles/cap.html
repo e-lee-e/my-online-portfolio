@@ -1,0 +1,91 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Cap | Eg Elisée Lathro</title>
+<meta name="description" content="Write-up de la machine HackTheBox Cap, Linux, difficulté facile, par Eg Elisée Lathro.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&amp;family=JetBrains+Mono:wght@400;500&amp;display=swap" rel="stylesheet">
+<link rel="stylesheet" href="../css/style.css">
+</head>
+<body>
+
+<header class="topbar">
+  <div class="topbar-inner">
+    <a class="wordmark" href="../index.html">
+      <span class="mark" aria-hidden="true">EL</span>
+      <span><strong>Eg Elisée Lathro</strong> <span class="sep">|</span> Carnet de cybersécurité</span>
+    </a>
+    <button class="nav-toggle" aria-expanded="false">Menu</button>
+    <nav class="tabs" aria-label="Navigation principale">
+      <a href="../index.html">Qui suis-je</a>
+      <a href="../travaux.html">Projets et TP</a>
+      <a href="../htb-adventure.html" aria-current="page">Aventure HackTheBox</a>
+      <a href="../certifications.html">Certifications</a>
+    </nav>
+  </div>
+</header>
+
+<div class="container">
+  <a class="back-link" href="../htb-adventure.html">← Retour aux rapports</a>
+  <header class="page-head">
+    <ul class="tags">
+      <li class="tag blue">Linux</li>
+      <li class="tag">Facile</li>
+      <li class="tag">Machine retirée</li>
+    </ul>
+    <h1>Cap</h1>
+    <p class="lede">Deux erreurs très ordinaires mises bout à bout : une référence d'objet qu'on peut changer dans l'URL, et une capability Linux accordée à un binaire qui n'en avait pas besoin.</p>
+  </header>
+
+  <hr>
+
+  <main class="article-body">
+    <h2>La chaîne en cinq lignes</h2>
+    <p>
+      Le résumé avant le détail, pour que quelqu'un qui ne fera pas la machine comprenne
+      quand même de quoi il s'agit.
+    </p>
+    <ul class="prose">
+      <li>Trois services exposés, FTP, SSH et un serveur web d'administration</li>
+      <li>Un identifiant de capture réseau modifiable dans l'URL, qui donne accès à celle d'un autre utilisateur</li>
+      <li>Des identifiants en clair dans le trafic capturé, réutilisables en SSH</li>
+      <li>Une capability Linux posée sur un binaire, qui suffit à devenir root</li>
+    </ul>
+
+    <h2>Reconnaissance</h2>
+    <p class="draft">En cours de rédaction</p>
+
+    <h2>Énumération</h2>
+    <p class="draft">En cours de rédaction</p>
+
+    <h2>Accès initial</h2>
+    <p class="draft">En cours de rédaction</p>
+
+    <h2>Élévation de privilèges</h2>
+    <p class="draft">En cours de rédaction</p>
+
+    <h2>Ce que j'en retiens</h2>
+    <p class="draft">En cours de rédaction</p>
+
+  </main>
+</div>
+
+<footer>
+  <div class="container">
+    <div class="footer-links">
+      <a href="../index.html">Qui suis-je</a>
+      <a href="../travaux.html">Projets et TP</a>
+      <a href="../htb-adventure.html">Aventure HackTheBox</a>
+      <a href="../certifications.html">Certifications</a>
+      <a href="mailto:elisee.lathro@gmail.com">Email</a>
+    </div>
+    <p class="footer-note">Paris, France</p>
+  </div>
+</footer>
+
+<script src="../js/main.js"></script>
+</body>
+</html>

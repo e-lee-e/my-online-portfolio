@@ -1,0 +1,95 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Nexus | Eg Elisée Lathro</title>
+<meta name="description" content="Write-up de la machine HackTheBox Nexus, Linux, difficulté facile, par Eg Elisée Lathro.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&amp;family=JetBrains+Mono:wght@400;500&amp;display=swap" rel="stylesheet">
+<link rel="stylesheet" href="../css/style.css">
+</head>
+<body>
+
+<header class="topbar">
+  <div class="topbar-inner">
+    <a class="wordmark" href="../index.html">
+      <span class="mark" aria-hidden="true">EL</span>
+      <span><strong>Eg Elisée Lathro</strong> <span class="sep">|</span> Carnet de cybersécurité</span>
+    </a>
+    <button class="nav-toggle" aria-expanded="false">Menu</button>
+    <nav class="tabs" aria-label="Navigation principale">
+      <a href="../index.html">Qui suis-je</a>
+      <a href="../travaux.html">Projets et TP</a>
+      <a href="../htb-adventure.html" aria-current="page">Aventure HackTheBox</a>
+      <a href="../certifications.html">Certifications</a>
+    </nav>
+  </div>
+</header>
+
+<div class="container">
+  <a class="back-link" href="../htb-adventure.html">← Retour aux rapports</a>
+  <header class="page-head">
+    <ul class="tags">
+      <li class="tag blue">Linux</li>
+      <li class="tag">Facile</li>
+      <li class="tag">Gitea</li>
+    </ul>
+    <h1>Nexus</h1>
+    <p class="lede">La machine qui rappelle qu'un dépôt Git public n'est pas seulement du code : c'est aussi l'historique de tout ce qu'on y a commité par erreur.</p>
+  </header>
+
+  <hr>
+
+  <main class="article-body">
+    <h2>La chaîne en cinq lignes</h2>
+    <p>
+      Le résumé avant le détail, pour que quelqu'un qui ne fera pas la machine comprenne
+      quand même de quoi il s'agit.
+    </p>
+    <ul class="prose">
+      <li>Un service Gitea exposé, dont un dépôt laisse fuiter des identifiants</li>
+      <li>Une offre d'emploi publiée qui donne le format des noms d'utilisateur</li>
+      <li>Un CRM Krayin vulnérable à CVE-2026-38526, qui donne un shell en www-data</li>
+      <li>D'autres identifiants dans les fichiers de configuration du CRM, utilisables en SSH</li>
+      <li>Un service de synchronisation de templates vulnérable au path traversal, qui mène à root</li>
+    </ul>
+
+    <h2>Reconnaissance</h2>
+    <p class="draft">En cours de rédaction</p>
+
+    <h2>Le dépôt Gitea</h2>
+    <p class="draft">En cours de rédaction</p>
+
+    <h2>Construire la liste d'utilisateurs</h2>
+    <p class="draft">En cours de rédaction</p>
+
+    <h2>Accès initial</h2>
+    <p class="draft">En cours de rédaction</p>
+
+    <h2>Passage utilisateur puis root</h2>
+    <p class="draft">En cours de rédaction</p>
+
+    <h2>Ce que j'en retiens</h2>
+    <p class="draft">En cours de rédaction</p>
+
+  </main>
+</div>
+
+<footer>
+  <div class="container">
+    <div class="footer-links">
+      <a href="../index.html">Qui suis-je</a>
+      <a href="../travaux.html">Projets et TP</a>
+      <a href="../htb-adventure.html">Aventure HackTheBox</a>
+      <a href="../certifications.html">Certifications</a>
+      <a href="mailto:elisee.lathro@gmail.com">Email</a>
+    </div>
+    <p class="footer-note">Paris, France</p>
+  </div>
+</footer>
+
+<script src="../js/main.js"></script>
+</body>
+</html>

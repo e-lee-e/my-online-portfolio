@@ -1,0 +1,95 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>TwoMillion | Eg Elisée Lathro</title>
+<meta name="description" content="Write-up de la machine HackTheBox TwoMillion, Linux, difficulté facile, par Eg Elisée Lathro.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&amp;family=JetBrains+Mono:wght@400;500&amp;display=swap" rel="stylesheet">
+<link rel="stylesheet" href="../css/style.css">
+</head>
+<body>
+
+<header class="topbar">
+  <div class="topbar-inner">
+    <a class="wordmark" href="../index.html">
+      <span class="mark" aria-hidden="true">EL</span>
+      <span><strong>Eg Elisée Lathro</strong> <span class="sep">|</span> Carnet de cybersécurité</span>
+    </a>
+    <button class="nav-toggle" aria-expanded="false">Menu</button>
+    <nav class="tabs" aria-label="Navigation principale">
+      <a href="../index.html">Qui suis-je</a>
+      <a href="../travaux.html">Projets et TP</a>
+      <a href="../htb-adventure.html" aria-current="page">Aventure HackTheBox</a>
+      <a href="../certifications.html">Certifications</a>
+    </nav>
+  </div>
+</header>
+
+<div class="container">
+  <a class="back-link" href="../htb-adventure.html">← Retour aux rapports</a>
+  <header class="page-head">
+    <ul class="tags">
+      <li class="tag blue">Linux</li>
+      <li class="tag">Facile</li>
+      <li class="tag">Machine retirée</li>
+    </ul>
+    <h1>TwoMillion</h1>
+    <p class="lede">Une reconstitution de l'ancienne plateforme HackTheBox, avec son code d'invitation cassable. Tout le début se joue dans le JavaScript de la page, avant même d'avoir un compte.</p>
+  </header>
+
+  <hr>
+
+  <main class="article-body">
+    <h2>La chaîne en cinq lignes</h2>
+    <p>
+      Le résumé avant le détail, pour que quelqu'un qui ne fera pas la machine comprenne
+      quand même de quoi il s'agit.
+    </p>
+    <ul class="prose">
+      <li>Un JavaScript obfusqué côté client, qui cache la logique de génération du code d'invitation</li>
+      <li>Une API dont les points d'entrée se laissent énumérer une fois le compte créé</li>
+      <li>Un point d'entrée qui permet de passer son propre compte en administrateur</li>
+      <li>Une injection de commande dans la génération de VPN côté administration</li>
+      <li>Un fichier .env avec des identifiants réutilisés, puis un noyau obsolète et CVE-2023-0386</li>
+    </ul>
+
+    <h2>Reconnaissance</h2>
+    <p class="draft">En cours de rédaction</p>
+
+    <h2>Le code d'invitation</h2>
+    <p class="draft">En cours de rédaction</p>
+
+    <h2>Énumération de l'API</h2>
+    <p class="draft">En cours de rédaction</p>
+
+    <h2>Passage administrateur puis shell</h2>
+    <p class="draft">En cours de rédaction</p>
+
+    <h2>Élévation de privilèges</h2>
+    <p class="draft">En cours de rédaction</p>
+
+    <h2>Ce que j'en retiens</h2>
+    <p class="draft">En cours de rédaction</p>
+
+  </main>
+</div>
+
+<footer>
+  <div class="container">
+    <div class="footer-links">
+      <a href="../index.html">Qui suis-je</a>
+      <a href="../travaux.html">Projets et TP</a>
+      <a href="../htb-adventure.html">Aventure HackTheBox</a>
+      <a href="../certifications.html">Certifications</a>
+      <a href="mailto:elisee.lathro@gmail.com">Email</a>
+    </div>
+    <p class="footer-note">Paris, France</p>
+  </div>
+</footer>
+
+<script src="../js/main.js"></script>
+</body>
+</html>

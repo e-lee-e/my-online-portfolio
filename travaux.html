@@ -1,0 +1,584 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Projets et TP | Eg Elisée Lathro</title>
+<meta name="description" content="Les projets et travaux pratiques d'Eg Elisée Lathro à l'EFREI Paris : test d'intrusion, ethical hacking, sécurisation de serveur web, supervision et Active Directory, consultables en ligne.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&amp;family=JetBrains+Mono:wght@400;500&amp;display=swap" rel="stylesheet">
+<link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+
+<header class="topbar">
+  <div class="topbar-inner">
+    <a class="wordmark" href="index.html">
+      <span class="mark" aria-hidden="true">EL</span>
+      <span><strong>Eg Elisée Lathro</strong> <span class="sep">|</span> Carnet de cybersécurité</span>
+    </a>
+    <button class="nav-toggle" aria-expanded="false">Menu</button>
+    <nav class="tabs" aria-label="Navigation principale">
+      <a href="index.html">Qui suis-je</a>
+      <a href="travaux.html" aria-current="page">Projets et TP</a>
+      <a href="htb-adventure.html">Aventure HackTheBox</a>
+      <a href="certifications.html">Certifications</a>
+    </nav>
+  </div>
+</header>
+
+<div class="container">
+  <header class="page-head">
+    <span class="page-icon" aria-hidden="true">📄</span>
+    <h1>Projets et TP</h1>
+    <p class="lede">
+      Les rapports que je rends à l'EFREI, rangés par thème et lisibles directement
+      ici. Chaque fiche dit ce que contient le document et ce que j'en ai tiré, pour
+      éviter d'ouvrir vingt pages avant de savoir si le sujet vous intéresse.
+    </p>
+    <ul class="props">
+      <li><span class="k">Période</span><span class="v">Année 2025-2026</span></li>
+      <li><span class="k">Volume</span><span class="v"><strong>12 documents</strong>, 179 pages</span></li>
+      <li><span class="k">Thèmes</span><span class="v">Sécurité offensive, défense et supervision, Windows Server</span></li>
+    </ul>
+  </header>
+
+  <hr>
+
+  <main>
+    <div class="view-bar" role="group" aria-label="Filtrer par thème">
+      <button class="filter-btn is-active" data-filter="all" aria-pressed="true">Tout <span class="count">12</span></button>
+      <button class="filter-btn" data-filter="offensif" aria-pressed="false">Sécurité offensive <span class="count">5</span></button>
+      <button class="filter-btn" data-filter="defensif" aria-pressed="false">Défense et supervision <span class="count">3</span></button>
+      <button class="filter-btn" data-filter="systeme" aria-pressed="false">Windows Server <span class="count">4</span></button>
+    </div>
+    <p class="filter-status" role="status" aria-live="polite">12 documents affichés</p>
+
+      <article class="doc" data-theme="offensif">
+        <h2>Rapport d'audit de sécurité, FinSecure Bank</h2>
+        <p class="doc-kicker">Projet de test d'intrusion, rendu le 11 décembre 2025, en binôme avec Amenzo Hamici</p>
+        <ul class="tags">
+          <li class="tag blue">Test d'intrusion</li>
+          <li class="tag">Rapport client</li>
+          <li class="tag">15 pages</li>
+        </ul>
+        <p>
+          FinSecure Bank est une banque en ligne fictive qui nous a ouvert un site
+          prototype avec une consigne unique : retrouver le mot de passe administrateur.
+          Nous en avons tiré un livrable au format professionnel, page de garde, circuit
+          de validation et historique de versions compris, parce que l'exercice portait
+          autant sur la forme du rapport que sur l'intrusion.
+        </p>
+        <p>
+          Trois vulnérabilités sont remontées. Une injection SQL sur le formulaire
+          d'authentification, qui permet d'entrer sans identifiants valides. Un directory
+          traversal qui expose des fichiers du serveur, et qui nous a menés à un dossier
+          au nom volontairement obscur. Enfin une injection SQL dans le paramètre de tri
+          d'une page d'administration, exploitable à la main par sous-requêtes successives,
+          et donc trivialement automatisable par un attaquant moins patient que nous.
+        </p>
+        <p class="doc-note">
+          La partie qui m'a demandé le plus de travail n'est pas l'exploitation mais le
+          message à la direction non technique, le mapping réglementaire et le plan de
+          remédiation. Écrire trois paragraphes qu'un directeur comprend sans perdre la
+          précision technique est beaucoup plus dur que de faire passer une requête.
+        </p>
+      <details class="reader">
+        <summary>
+          <span class="chev" aria-hidden="true">▸</span>
+          <span class="label"><b>Lire le document</b></span>
+          <span class="hint">PDF, 15 p.</span>
+        </summary>
+        <div class="reader-body">
+          <iframe data-src="docs/rapport-audit-finsecure.pdf#view=FitH" title="Aperçu du document" loading="lazy"></iframe>
+        </div>
+        <div class="reader-foot">
+          <span>Aperçu intégré</span>
+          <span class="spacer"></span>
+          <a class="btn" href="docs/rapport-audit-finsecure.pdf" target="_blank" rel="noopener">Plein écran</a>
+          <a class="btn" href="docs/rapport-audit-finsecure.pdf" download>Télécharger</a>
+        </div>
+      </details>
+      </article>
+
+      <article class="doc" data-theme="offensif">
+        <h2>Élévation de privilèges sous Linux</h2>
+        <p class="doc-kicker">Ethical hacking, atelier 1, sur Root-Me puis sur une machine Windows vulnérable</p>
+        <ul class="tags">
+          <li class="tag blue">Ethical hacking</li>
+          <li class="tag">Root-Me</li>
+          <li class="tag">20 pages</li>
+        </ul>
+        <p>
+          Cinq scénarios enchaînés, du plus bête au plus complet : une configuration sudo
+          trop généreuse, un binaire SUID, des droits d'accès mal posés, une backdoor,
+          puis l'exploitation d'une machine Windows avec Metasploit et EternalBlue
+          jusqu'au shell Meterpreter.
+        </p>
+        <p>
+          Le passage que je retiens est le détournement du PATH. Le programme cible
+          appelait <code>ls</code> sans chemin absolu ; il a suffi de déposer mon propre
+          script nommé <code>ls</code> dans un répertoire accessible en écriture et placé
+          en tête du PATH pour qu'il s'exécute à la place du vrai. Aucune faille mémoire,
+          aucun exploit public, juste une ligne de code écrite sans se méfier.
+        </p>
+        <p class="doc-note">
+          C'est aussi le TP qui m'a appris à lire une sortie de <code>ls -l</code> ligne
+          par ligne avant d'aller chercher un exploit. Les deux tiers du document sont du
+          commentaire de permissions, et c'est là que se trouvait la réponse.
+        </p>
+      <details class="reader">
+        <summary>
+          <span class="chev" aria-hidden="true">▸</span>
+          <span class="label"><b>Lire le document</b></span>
+          <span class="hint">PDF, 20 p.</span>
+        </summary>
+        <div class="reader-body">
+          <iframe data-src="docs/eh1-elevation-privileges-linux.pdf#view=FitH" title="Aperçu du document" loading="lazy"></iframe>
+        </div>
+        <div class="reader-foot">
+          <span>Aperçu intégré</span>
+          <span class="spacer"></span>
+          <a class="btn" href="docs/eh1-elevation-privileges-linux.pdf" target="_blank" rel="noopener">Plein écran</a>
+          <a class="btn" href="docs/eh1-elevation-privileges-linux.pdf" download>Télécharger</a>
+        </div>
+      </details>
+      </article>
+
+      <article class="doc" data-theme="offensif">
+        <h2>Recherche d'exploits et prise en main de Metasploit</h2>
+        <p class="doc-kicker">Ethical hacking, atelier 2, autour d'Exploit-DB, Searchsploit et Metasploitable</p>
+        <ul class="tags">
+          <li class="tag blue">Ethical hacking</li>
+          <li class="tag">Metasploit</li>
+          <li class="tag">23 pages</li>
+        </ul>
+        <p>
+          Le TP part du sourcing et finit sur la cible. Première moitié sur Exploit-DB et
+          Searchsploit : ce que veut dire un exploit vérifié, pourquoi une base locale est
+          préférable à une recherche en ligne quand on travaille sur un périmètre client,
+          et comment lire le code d'un exploit avant de le lancer.
+        </p>
+        <p>
+          Seconde moitié sur Metasploit contre une machine Metasploitable : balayage UDP,
+          attaque par dictionnaire sur FTP, énumération HTTP, puis exploitation des
+          services vulnérables. Le tableau de la page 10 met côte à côte chaque service
+          détecté, sa version, ses vulnérabilités connues et l'impact estimé. BIND 9.4.2,
+          Apache 2.2.8, ProFTPd 1.3.1, MySQL 5.0.51a, VNC, UnrealIRCd 3.2.8.1 et sa
+          backdoor intégrée.
+        </p>
+        <p class="doc-note">
+          Ce tableau est l'exercice qui m'a le plus resservi ensuite. C'est exactement le
+          format que réclame la synthèse d'un rapport d'audit.
+        </p>
+      <details class="reader">
+        <summary>
+          <span class="chev" aria-hidden="true">▸</span>
+          <span class="label"><b>Lire le document</b></span>
+          <span class="hint">PDF, 23 p.</span>
+        </summary>
+        <div class="reader-body">
+          <iframe data-src="docs/eh2-searchsploit-metasploit.pdf#view=FitH" title="Aperçu du document" loading="lazy"></iframe>
+        </div>
+        <div class="reader-foot">
+          <span>Aperçu intégré</span>
+          <span class="spacer"></span>
+          <a class="btn" href="docs/eh2-searchsploit-metasploit.pdf" target="_blank" rel="noopener">Plein écran</a>
+          <a class="btn" href="docs/eh2-searchsploit-metasploit.pdf" download>Télécharger</a>
+        </div>
+      </details>
+      </article>
+
+      <article class="doc" data-theme="offensif">
+        <h2>Commandes réseau et analyse de trafic</h2>
+        <p class="doc-kicker">Ethical hacking, atelier 3, ICMP, ARP, DNS, Telnet et capture réseau</p>
+        <ul class="tags">
+          <li class="tag blue">Réseau</li>
+          <li class="tag">Wireshark</li>
+          <li class="tag">13 pages</li>
+        </ul>
+        <p>
+          Retour aux fondamentaux, mais vus du côté de l'attaquant. Adressage statique
+          puis DHCP, ICMP et traceroute, manipulation du cache ARP, résolution par
+          <code>/etc/hosts</code> et par DNS, et pour finir une capture de session Telnet
+          où tout circule en clair, identifiants compris.
+        </p>
+        <p>
+          La séquence sur ARP tient en quelques commandes : supprimer les entrées
+          existantes, forcer une association vers une adresse MAC inventée, puis observer
+          que la machine voisine ne répond plus. Écrit comme ça, c'est court. C'est
+          pourtant ce qui m'a fait comprendre concrètement pourquoi on segmente un réseau
+          en VLAN au lieu de le laisser plat, décision qu'on retrouve dans le projet
+          transversal plus bas.
+        </p>
+      <details class="reader">
+        <summary>
+          <span class="chev" aria-hidden="true">▸</span>
+          <span class="label"><b>Lire le document</b></span>
+          <span class="hint">PDF, 13 p.</span>
+        </summary>
+        <div class="reader-body">
+          <iframe data-src="docs/eh3-reseaux-analyse-trafic.pdf#view=FitH" title="Aperçu du document" loading="lazy"></iframe>
+        </div>
+        <div class="reader-foot">
+          <span>Aperçu intégré</span>
+          <span class="spacer"></span>
+          <a class="btn" href="docs/eh3-reseaux-analyse-trafic.pdf" target="_blank" rel="noopener">Plein écran</a>
+          <a class="btn" href="docs/eh3-reseaux-analyse-trafic.pdf" download>Télécharger</a>
+        </div>
+      </details>
+      </article>
+
+      <article class="doc" data-theme="offensif">
+        <h2>Cryptographie appliquée et chaîne de certification</h2>
+        <p class="doc-kicker">Ethical hacking, atelier 4, OpenSSL, CRL et OCSP</p>
+        <ul class="tags">
+          <li class="tag blue">Cryptographie</li>
+          <li class="tag">OpenSSL</li>
+          <li class="tag">17 pages</li>
+        </ul>
+        <p>
+          Dissection complète de la chaîne de confiance TLS de cyber.gouv.fr avec OpenSSL.
+          Récupération du certificat serveur, identification de l'autorité subordonnée
+          Certigna Server Authentication OVCP EU CA G1 et de la racine Certigna Root CA,
+          lecture de la clé RSA 3072 bits, puis des extensions Key Usage et Basic
+          Constraints pour déterminer ce que le certificat a le droit de signer.
+        </p>
+        <p>
+          La seconde partie porte sur la révocation. Extraire le numéro de série,
+          télécharger la CRL de l'autorité au format DER, y chercher ce numéro, puis
+          refaire la même vérification en ligne avec le protocole OCSP. Le TP se termine
+          sur la chaîne ISRG Root X1, celle de Let's Encrypt, et sur la lecture du champ
+          <code>pathlen</code> qui limite ce qu'une autorité intermédiaire peut émettre.
+        </p>
+        <p class="doc-note">
+          C'est le document le plus aride des quatre, et probablement le plus utile. Le
+          cadenas du navigateur a cessé d'être une boîte noire à ce moment-là.
+        </p>
+      <details class="reader">
+        <summary>
+          <span class="chev" aria-hidden="true">▸</span>
+          <span class="label"><b>Lire le document</b></span>
+          <span class="hint">PDF, 17 p.</span>
+        </summary>
+        <div class="reader-body">
+          <iframe data-src="docs/eh4-cryptographie-certificats.pdf#view=FitH" title="Aperçu du document" loading="lazy"></iframe>
+        </div>
+        <div class="reader-foot">
+          <span>Aperçu intégré</span>
+          <span class="spacer"></span>
+          <a class="btn" href="docs/eh4-cryptographie-certificats.pdf" target="_blank" rel="noopener">Plein écran</a>
+          <a class="btn" href="docs/eh4-cryptographie-certificats.pdf" download>Télécharger</a>
+        </div>
+      </details>
+      </article>
+
+      <article class="doc" data-theme="defensif">
+        <h2>Sécurisation avancée d'un serveur web</h2>
+        <p class="doc-kicker">Projet Apache, ModSecurity, Fail2Ban, en-têtes HTTP et monitoring des logs</p>
+        <ul class="tags">
+          <li class="tag green">Défense</li>
+          <li class="tag">Apache</li>
+          <li class="tag">16 pages</li>
+        </ul>
+        <p>
+          Le pendant défensif des ateliers précédents, sur la même pile logicielle.
+          Installation de ModSecurity avec le Core Rule Set de l'OWASP, puis bascule du
+          moteur de règles de <code>DetectionOnly</code> à <code>On</code>, ce qui est le
+          moment où le pare-feu applicatif commence réellement à bloquer plutôt qu'à
+          observer.
+        </p>
+        <p>
+          Vient ensuite Fail2Ban, avec les jails classiques sur les journaux Apache, puis
+          un filtre écrit à la main qui lit le journal d'audit de ModSecurity. C'est ce
+          filtre qui rend l'ensemble cohérent : une alerte applicative déclenche
+          directement un bannissement réseau, au lieu de rester une ligne de log que
+          personne ne lira. Le projet se termine sur les en-têtes de sécurité HTTP et une
+          phase de tests de validation.
+        </p>
+      <details class="reader">
+        <summary>
+          <span class="chev" aria-hidden="true">▸</span>
+          <span class="label"><b>Lire le document</b></span>
+          <span class="hint">PDF, 16 p.</span>
+        </summary>
+        <div class="reader-body">
+          <iframe data-src="docs/securisation-serveur-web.pdf#view=FitH" title="Aperçu du document" loading="lazy"></iframe>
+        </div>
+        <div class="reader-foot">
+          <span>Aperçu intégré</span>
+          <span class="spacer"></span>
+          <a class="btn" href="docs/securisation-serveur-web.pdf" target="_blank" rel="noopener">Plein écran</a>
+          <a class="btn" href="docs/securisation-serveur-web.pdf" download>Télécharger</a>
+        </div>
+      </details>
+      </article>
+
+      <article class="doc" data-theme="defensif">
+        <h2>Supervision d'un parc avec Zabbix et GLPI</h2>
+        <p class="doc-kicker">Supervision et gestion de parc, TP 1, septembre 2025, avec Victor Moneger et Brandon Nana</p>
+        <ul class="tags">
+          <li class="tag green">Supervision</li>
+          <li class="tag">Zabbix</li>
+          <li class="tag">24 pages</li>
+        </ul>
+        <p>
+          Déploiement complet d'une chaîne de supervision sur trois machines virtuelles.
+          Zabbix 7.0 sur Ubuntu Server 24.04, interface web, agents déployés sur Linux et
+          Windows, sonde SNMP pour l'équipement réseau, puis déclencheurs personnalisés,
+          media types et actions d'alerte. La dernière partie ajoute GLPI pour
+          l'inventaire, et le document se termine par une checklist de validation.
+        </p>
+        <p class="doc-note">
+          La partie que je referais autrement, ce sont les seuils. Poser une alerte prend
+          deux minutes, la calibrer pour qu'elle ne se déclenche ni trop tôt ni jamais
+          prend beaucoup plus longtemps. C'est précisément le travail que je cherche à
+          faire en SOC, et le TP ne fait que l'effleurer.
+        </p>
+      <details class="reader">
+        <summary>
+          <span class="chev" aria-hidden="true">▸</span>
+          <span class="label"><b>Lire le document</b></span>
+          <span class="hint">PDF, 24 p.</span>
+        </summary>
+        <div class="reader-body">
+          <iframe data-src="docs/supervision-zabbix-glpi.pdf#view=FitH" title="Aperçu du document" loading="lazy"></iframe>
+        </div>
+        <div class="reader-foot">
+          <span>Aperçu intégré</span>
+          <span class="spacer"></span>
+          <a class="btn" href="docs/supervision-zabbix-glpi.pdf" target="_blank" rel="noopener">Plein écran</a>
+          <a class="btn" href="docs/supervision-zabbix-glpi.pdf" download>Télécharger</a>
+        </div>
+      </details>
+      </article>
+
+      <article class="doc" data-theme="defensif">
+        <h2>Infrastructure sécurisée pour MediCare Solutions</h2>
+        <p class="doc-kicker">Projet transversal, conception d'une infrastructure de télémédecine</p>
+        <ul class="tags">
+          <li class="tag green">Architecture</li>
+          <li class="tag">Conformité</li>
+          <li class="tag">17 pages</li>
+        </ul>
+        <p>
+          MediCare Solutions est une entreprise de télémédecine fictive qui traite des
+          dossiers patients. Le projet consiste à concevoir son infrastructure entière et
+          à défendre chaque choix. Schéma réseau sous Packet Tracer, plan d'adressage IPv4
+          et IPv6, segmentation en VLAN métier, DMZ derrière le pare-feu, pool VPN pour le
+          télétravail, authentification 802.1X via un serveur RADIUS, chiffrement au repos
+          et en transit.
+        </p>
+        <p>
+          La moitié du document ne parle pas de technique. RGPD appliqué aux données de
+          santé, matrice de risques avec probabilité, gravité et score, plan de reprise
+          d'activité avec objectif de point de reprise à une heure et tests de
+          restauration trimestriels. Isoler le Wi-Fi invité dans un VLAN qui ne voit
+          qu'Internet n'est pas une élégance d'architecte, c'est ce qui rend l'hébergement
+          de données de santé défendable devant un auditeur.
+        </p>
+      <details class="reader">
+        <summary>
+          <span class="chev" aria-hidden="true">▸</span>
+          <span class="label"><b>Lire le document</b></span>
+          <span class="hint">PDF, 17 p.</span>
+        </summary>
+        <div class="reader-body">
+          <iframe data-src="docs/projet-transversal-medicare.pdf#view=FitH" title="Aperçu du document" loading="lazy"></iframe>
+        </div>
+        <div class="reader-foot">
+          <span>Aperçu intégré</span>
+          <span class="spacer"></span>
+          <a class="btn" href="docs/projet-transversal-medicare.pdf" target="_blank" rel="noopener">Plein écran</a>
+          <a class="btn" href="docs/projet-transversal-medicare.pdf" download>Télécharger</a>
+        </div>
+      </details>
+      </article>
+
+      <article class="doc" data-theme="systeme">
+        <h2>Déploiement d'un domaine Active Directory</h2>
+        <p class="doc-kicker">Systèmes d'exploitation avancés, atelier 1, sur Windows Server 2019</p>
+        <ul class="tags">
+          <li class="tag amber">Active Directory</li>
+          <li class="tag">PowerShell</li>
+          <li class="tag">11 pages</li>
+        </ul>
+        <p>
+          Installation d'un contrôleur de domaine de bout en bout, en privilégiant la
+          ligne de commande. Préparation de la machine virtuelle, renommage du serveur,
+          adressage statique avec <code>New-NetIPAddress</code>, installation du rôle
+          AD DS, promotion en contrôleur de domaine, puis visite des consoles Domaines et
+          approbations, Modification ADSI et Centre d'administration.
+        </p>
+        <p>
+          Le TP impose de prendre un instantané de la machine avant chaque étape
+          sensible. C'est ce qui permet de refaire la même installation deux fois, une
+          fois en interface graphique et une fois en PowerShell, et de voir exactement ce
+          que chaque clic déclenche derrière.
+        </p>
+      <details class="reader">
+        <summary>
+          <span class="chev" aria-hidden="true">▸</span>
+          <span class="label"><b>Lire le document</b></span>
+          <span class="hint">PDF, 11 p.</span>
+        </summary>
+        <div class="reader-body">
+          <iframe data-src="docs/ad1-domaine-active-directory.pdf#view=FitH" title="Aperçu du document" loading="lazy"></iframe>
+        </div>
+        <div class="reader-foot">
+          <span>Aperçu intégré</span>
+          <span class="spacer"></span>
+          <a class="btn" href="docs/ad1-domaine-active-directory.pdf" target="_blank" rel="noopener">Plein écran</a>
+          <a class="btn" href="docs/ad1-domaine-active-directory.pdf" download>Télécharger</a>
+        </div>
+      </details>
+      </article>
+
+      <article class="doc" data-theme="systeme">
+        <h2>Unités d'organisation et comptes du domaine</h2>
+        <p class="doc-kicker">Systèmes d'exploitation avancés, atelier 2</p>
+        <ul class="tags">
+          <li class="tag amber">Active Directory</li>
+          <li class="tag">PowerShell</li>
+          <li class="tag">9 pages</li>
+        </ul>
+        <p>
+          Construction de l'arborescence du domaine, puis création et modification des
+          comptes d'utilisateurs et d'ordinateurs, d'abord à la souris puis avec le module
+          PowerShell Active Directory. Attributs, politique d'expiration de mot de passe,
+          coordonnées, tout y passe service par service.
+        </p>
+        <p>
+          Ce TP est celui où la structure compte plus que les commandes. Une unité
+          d'organisation mal placée ne coûte rien au moment de sa création ; elle se paie
+          au moment d'appliquer les stratégies de groupe, c'est-à-dire au TP suivant.
+        </p>
+      <details class="reader">
+        <summary>
+          <span class="chev" aria-hidden="true">▸</span>
+          <span class="label"><b>Lire le document</b></span>
+          <span class="hint">PDF, 9 p.</span>
+        </summary>
+        <div class="reader-body">
+          <iframe data-src="docs/ad2-unites-organisation-comptes.pdf#view=FitH" title="Aperçu du document" loading="lazy"></iframe>
+        </div>
+        <div class="reader-foot">
+          <span>Aperçu intégré</span>
+          <span class="spacer"></span>
+          <a class="btn" href="docs/ad2-unites-organisation-comptes.pdf" target="_blank" rel="noopener">Plein écran</a>
+          <a class="btn" href="docs/ad2-unites-organisation-comptes.pdf" download>Télécharger</a>
+        </div>
+      </details>
+      </article>
+
+      <article class="doc" data-theme="systeme">
+        <h2>Groupes, partages et permissions NTFS</h2>
+        <p class="doc-kicker">Systèmes d'exploitation avancés, atelier 3, mon compte rendu</p>
+        <ul class="tags">
+          <li class="tag amber">Active Directory</li>
+          <li class="tag">Modèle AGDLP</li>
+          <li class="tag">8 pages</li>
+        </ul>
+        <p>
+          Application du modèle AGDLP : un compte entre dans un groupe global qui
+          correspond à son équipe, ce groupe entre dans un groupe de domaine local qui
+          porte les permissions d'une ressource, et c'est ce dernier qui reçoit les droits
+          NTFS. Personne ne reçoit jamais de permission en nom propre.
+        </p>
+        <p>
+          Le compte rendu montre les commandes <code>New-ADGroup</code> écrites une par
+          une pour les cinq services, puis la même chose réduite à une double boucle
+          PowerShell de six lignes. Écrire d'abord la version longue n'est pas une perte
+          de temps : c'est ce qui permet de savoir ce que la boucle est censée produire.
+          Les partages et les permissions sont ensuite testés depuis une session Windows 11.
+        </p>
+      <details class="reader">
+        <summary>
+          <span class="chev" aria-hidden="true">▸</span>
+          <span class="label"><b>Lire le document</b></span>
+          <span class="hint">PDF, 8 p.</span>
+        </summary>
+        <div class="reader-body">
+          <iframe data-src="docs/ad3-groupes-partages-ntfs.pdf#view=FitH" title="Aperçu du document" loading="lazy"></iframe>
+        </div>
+        <div class="reader-foot">
+          <span>Aperçu intégré</span>
+          <span class="spacer"></span>
+          <a class="btn" href="docs/ad3-groupes-partages-ntfs.pdf" target="_blank" rel="noopener">Plein écran</a>
+          <a class="btn" href="docs/ad3-groupes-partages-ntfs.pdf" download>Télécharger</a>
+        </div>
+      </details>
+      </article>
+
+      <article class="doc" data-theme="systeme">
+        <h2>Énoncé de l'atelier 3</h2>
+        <p class="doc-kicker">Systèmes d'exploitation avancés, le sujet distribué en cours</p>
+        <ul class="tags">
+          <li class="tag">Sujet, pas mon travail</li>
+          <li class="tag">6 pages</li>
+        </ul>
+        <p>
+          Le sujet auquel répond le compte rendu ci-dessus. Je le publie pour deux
+          raisons : il explique la typologie des groupes de sécurité et le modèle AGDLP
+          mieux que mon résumé, et il permet de lire mon rendu en sachant ce qui était
+          demandé.
+        </p>
+      <details class="reader">
+        <summary>
+          <span class="chev" aria-hidden="true">▸</span>
+          <span class="label"><b>Lire le document</b></span>
+          <span class="hint">PDF, 6 p.</span>
+        </summary>
+        <div class="reader-body">
+          <iframe data-src="docs/ad3-enonce.pdf#view=FitH" title="Aperçu du document" loading="lazy"></iframe>
+        </div>
+        <div class="reader-foot">
+          <span>Aperçu intégré</span>
+          <span class="spacer"></span>
+          <a class="btn" href="docs/ad3-enonce.pdf" target="_blank" rel="noopener">Plein écran</a>
+          <a class="btn" href="docs/ad3-enonce.pdf" download>Télécharger</a>
+        </div>
+      </details>
+      </article>
+
+    <h2>Trois habitudes qui reviennent partout</h2>
+    <p>
+      En relisant ces douze documents d'affilée, les mêmes réflexes ressortent, et ils
+      expliquent à peu près tout ce que j'ai appris cette année. J'écris toujours la
+      commande à la main avant de la scripter, parce qu'une boucle PowerShell qu'on ne
+      sait pas dérouler est une boucle qu'on ne saura pas déboguer. Je prends un
+      instantané de la machine avant chaque étape risquée, ce qui transforme une erreur
+      en essai supplémentaire plutôt qu'en soirée perdue. Et quand c'est possible, je
+      refais du côté défensif ce que je viens de faire du côté offensif : le TP
+      ModSecurity et Fail2Ban existe précisément pour répondre aux quatre ateliers
+      d'ethical hacking.
+    </p>
+
+    <h2>À propos de ces documents</h2>
+    <p>
+      Ce sont des travaux d'étudiant, réalisés dans un cadre pédagogique, sur des
+      environnements de laboratoire ou des plateformes d'entraînement prévues pour cela.
+      Les adresses IP, identifiants et noms de domaine qu'ils contiennent appartiennent à
+      ces maquettes et n'ont aucune existence en production. Les projets menés en équipe
+      indiquent le nom de mes binômes.
+    </p>
+  </main>
+</div>
+
+<footer>
+  <div class="container">
+    <div class="footer-links">
+      <a href="index.html">Qui suis-je</a>
+      <a href="travaux.html">Projets et TP</a>
+      <a href="htb-adventure.html">Aventure HackTheBox</a>
+      <a href="certifications.html">Certifications</a>
+      <a href="mailto:elisee.lathro@gmail.com">Email</a>
+    </div>
+    <p class="footer-note">Paris, France</p>
+  </div>
+</footer>
+
+<script src="js/main.js"></script>
+</body>
+</html>

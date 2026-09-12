@@ -1,0 +1,154 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Qui suis-je | Eg Elisée Lathro</title>
+<meta name="description" content="Carnet de cybersécurité d'Eg Elisée Lathro, étudiant à l'EFREI Paris : rapports de TP, write-ups HackTheBox, certifications et parcours.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&amp;family=JetBrains+Mono:wght@400;500&amp;display=swap" rel="stylesheet">
+<link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+
+<header class="topbar">
+  <div class="topbar-inner">
+    <a class="wordmark" href="index.html">
+      <span class="mark" aria-hidden="true">EL</span>
+      <span><strong>Eg Elisée Lathro</strong> <span class="sep">|</span> Carnet de cybersécurité</span>
+    </a>
+    <button class="nav-toggle" aria-expanded="false">Menu</button>
+    <nav class="tabs" aria-label="Navigation principale">
+      <a href="index.html" aria-current="page">Qui suis-je</a>
+      <a href="travaux.html">Projets et TP</a>
+      <a href="htb-adventure.html">Aventure HackTheBox</a>
+      <a href="certifications.html">Certifications</a>
+    </nav>
+  </div>
+</header>
+
+<div class="container">
+  <header class="page-head">
+    <span class="page-icon" aria-hidden="true">🗒️</span>
+    <h1>Qui suis-je</h1>
+    <p class="lede">
+      Étudiant en cybersécurité à l'EFREI Paris. Ce carnet sert à garder une trace
+      de ce que je construis, de ce que je casse en labo et de ce que je n'ai
+      pas encore compris. C'est ici que je documente mon aventure dans la cybersécurité.
+    </p>
+    <ul class="props">
+      <li><span class="k">Formation</span><span class="v"><strong>Bachelor Ingénierie et Cybersécurité</strong>, EFREI Paris, 3ᵉ année</span></li>
+      <li><span class="k">Recherche</span><span class="v">Alternance SOC ou Administrateur Système et Sécurité à partir de septembre 2026</span></li>
+      <li><span class="k">Terrain</span><span class="v">Deux stages, un homelab Wazuh, HackTheBox</span></li>
+      <li><span class="k">Basé à</span><span class="v">Paris</span></li>
+    </ul>
+  </header>
+
+  <hr>
+
+  <main>
+    <p>
+      Je m'appelle Eg Elisée Lathro. J'ai passé mon bac général à Abidjan, spécialités
+      mathématiques et NSI, mention très bien, puis j'ai rejoint l'EFREI Paris en 2024.
+      Le programme couvre l'ethical hacking, la sécurité des réseaux, les tests
+      d'intrusion, la cryptographie et la gestion des risques. La partie qui me retient
+      le plus est celle où les deux côtés se rejoignent : comprendre une attaque assez
+      bien pour savoir quoi surveiller ensuite.
+    </p>
+    <p>
+      Deux stages ont beaucoup compté. Chez TBC SAS, j'ai automatisé le cycle de vie des
+      comptes utilisateurs entre Linux, Windows Server et Active Directory, et mené un
+      audit de l'infrastructure interne. C'est là que j'ai appris que la plupart des
+      problèmes de sécurité ne sont pas des failles exotiques mais des comptes qu'on a
+      oublié de désactiver. Chez MSD Consulting, j'ai fait des tests d'intrusion web sur
+      des périmètres clients réels et rédigé les rapports, de la synthèse pour la
+      direction jusqu'au détail technique. La rédaction m'a pris autant de temps que
+      l'exploitation, et c'est normal : un rapport que le client ne comprend pas ne sert
+      à rien.
+    </p>
+    <p>
+      Entre les cours, je monte un homelab SOC avec Wazuh pour m'entraîner au triage
+      d'incidents, et je progresse sur HackTheBox. Tout ce qui en sort finit ici, sous
+      une forme ou une autre.
+    </p>
+
+    <h2>Ce sur quoi je travaille</h2>
+    <p>
+      Rien de tout cela n'est un niveau expert. C'est la liste de ce que je manipule
+      régulièrement et que je peux expliquer.
+    </p>
+    <ul class="split">
+      <li><strong>Détection</strong> Wazuh, analyse de logs, Wireshark, Zabbix</li>
+      <li><strong>Systèmes</strong> Linux, Windows Server, Active Directory, IAM</li>
+      <li><strong>Réseau</strong> TCP/IP, VLAN, VPN, pare-feu, Nmap</li>
+      <li><strong>Web offensif</strong> Burp Suite, OWASP ZAP, sqlmap, Nikto, Metasploit</li>
+      <li><strong>Scripting</strong> Python, Bash, PowerShell, SQL, Git, Ansible</li>
+      <li><strong>Infrastructure</strong> VMware, VirtualBox, Docker, PostgreSQL</li>
+    </ul>
+
+    <h2>Les documents à lire en premier</h2>
+    <p>
+      Douze rapports rendus cette année sont consultables directement sur le site, sans
+      téléchargement. Si vous n'en ouvrez qu'un, prenez l'audit FinSecure Bank : c'est le
+      seul où l'on voit à la fois l'exploitation et la restitution à quelqu'un qui n'est
+      pas technicien, ce qui est la partie difficile du métier. Les quatre ateliers
+      d'ethical hacking montrent la méthode, le projet transversal montre comment je
+      raisonne sur une infrastructure entière.
+    </p>
+    <div class="callout">
+      <span class="ico" aria-hidden="true">📄</span>
+      <div>
+        <p><strong>12 documents, 179 pages</strong></p>
+        <p>
+          Test d'intrusion, ethical hacking, durcissement de serveur web, supervision
+          Zabbix et GLPI, Active Directory. <a href="travaux.html">Ouvrir les projets et TP</a>
+        </p>
+      </div>
+    </div>
+
+    <h2>Où je vais</h2>
+    <p>
+      L'objectif à court terme est une alternance en SOC ou en
+      administration systèmes et sécurité pour la rentrée 2026. En
+      parallèle, je passerai le CEH au cours de ma formation à l'EFREI, et je continue
+      de faire des projets pour avoir de quoi raconter en entretien plutôt que des lignes sur un CV.
+    </p>
+
+    <h2>En dehors de l'écran</h2>
+    <p>
+      Je joue aux échecs depuis 2021, dans le top 1,1 % sur chess.com, et je suis membre
+      de l'association Efrei Chess. Le reste du temps libre part dans les CTF en ligne et
+      dans une veille assez désordonnée sur l'IA et l'écosystème Linux, entre articles,
+      vidéos et documentaires.
+    </p>
+
+    <h2>Me contacter</h2>
+    <p>
+      Écrivez-moi si vous voulez discuter d'un write-up, d'un rapport, ou d'une alternance.
+      Je réponds plus vite sur LinkedIn que par mail.
+    </p>
+    <ul class="tags">
+      <li class="tag blue"><a href="mailto:elisee.lathro@gmail.com">elisee.lathro@gmail.com</a></li>
+      <li class="tag"><a href="https://www.linkedin.com/in/eg-elisee-lathro/" target="_blank" rel="noopener">LinkedIn</a></li>
+      <li class="tag"><a href="https://github.com/e-lee-e" target="_blank" rel="noopener">GitHub</a></li>
+    </ul>
+  </main>
+</div>
+
+<footer>
+  <div class="container">
+    <div class="footer-links">
+      <a href="index.html">Qui suis-je</a>
+      <a href="travaux.html">Projets et TP</a>
+      <a href="htb-adventure.html">Aventure HackTheBox</a>
+      <a href="certifications.html">Certifications</a>
+      <a href="mailto:elisee.lathro@gmail.com">Email</a>
+    </div>
+    <p class="footer-note">Paris, France</p>
+  </div>
+</footer>
+
+<script src="js/main.js"></script>
+</body>
+</html>
