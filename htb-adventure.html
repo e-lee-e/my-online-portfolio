@@ -35,12 +35,14 @@
     <p class="lede">
       Le journal de ma progression, du parcours Starting Point aux machines retirées.
       HackTheBox n'autorise la publication d'un write-up que lorsque la machine est
-      retirée, donc les machines encore actives apparaissent ici sans détail de résolution.
+      retirée, sauf pour les machines Starting Point, pensées pour être expliquées en
+      détail dès le départ. Les autres machines encore actives apparaissent ici sans
+      détail de résolution.
     </p>
     <ul class="props">
       <li><span class="k">Starting Point</span><span class="v"><strong>Terminé</strong>, Tier 0 à Tier 2</span></li>
-      <li><span class="k">Machines résolues</span><span class="v">13 actives, 4 retirées</span></li>
-      <li><span class="k">Rapports</span><span class="v">6 en cours de rédaction</span></li>
+      <li><span class="k">Machines résolues</span><span class="v">13 actives, 5 retirées</span></li>
+      <li><span class="k">Rapports</span><span class="v">6 publiés</span></li>
     </ul>
   </header>
 
@@ -71,19 +73,20 @@
 
     <h2>Les rapports</h2>
     <p>
-      Six machines dont je rédige le déroulé complet. Chaque page commence par un résumé de
-      la chaîne d'attaque, pour que la lecture reste utile même sans avoir fait la machine,
-      puis suit mon cheminement étape par étape.
+      Six machines pour lesquelles j'ai rédigé un write-up. Chaque page commence par un
+      résumé de la chaîne d'attaque, pour que la lecture reste utile même sans avoir fait
+      la machine, puis reprend les étapes clés de ma résolution sans détailler chaque
+      commande.
     </p>
 
     <article class="report">
       <ul class="tags">
         <li class="tag blue">Linux</li>
         <li class="tag">Facile</li>
+        <li class="tag">Machine retirée</li>
       </ul>
       <h3><a href="articles/cap.html">Cap</a></h3>
       <p>Trois services exposés, FTP, SSH et un serveur web d'administration, puis une capability linux posée sur un binaire, qui suffit à devenir root</p>
-      <p class="draft">Rapport en cours de rédaction</p>
     </article>
 
     <article class="report">
@@ -93,47 +96,46 @@
       </ul>
       <h3><a href="articles/unified.html">Unified</a></h3>
       <p>Un portail UniFi Network exposé derrière un proxy HTTP, puis le panneau d'administration livre ensuite un mot de passe ssh</p>
-      <p class="draft">Rapport en cours de rédaction</p>
     </article>
 
     <article class="report">
       <ul class="tags">
         <li class="tag blue">Linux</li>
         <li class="tag">Facile</li>
+        <li class="tag">Machine retirée</li>
       </ul>
       <h3><a href="articles/twomillion.html">TwoMillion</a></h3>
       <p>Un JavaScript obfusqué côté client, qui cache la logique de génération du code d'invitation, puis un fichier .env avec des identifiants réutilisés, puis un noyau obsolète et cve-2023-0386</p>
-      <p class="draft">Rapport en cours de rédaction</p>
     </article>
 
     <article class="report">
       <ul class="tags">
         <li class="tag blue">Windows</li>
         <li class="tag">Facile</li>
+        <li class="tag">Machine retirée</li>
       </ul>
       <h3><a href="articles/support.html">Support</a></h3>
       <p>Un partage SMB accessible sans authentification, puis une relation d'objets révélée par bloodhound, puis une délégation contrainte basée sur les ressources</p>
-      <p class="draft">Rapport en cours de rédaction</p>
     </article>
 
     <article class="report">
       <ul class="tags">
         <li class="tag blue">Linux</li>
         <li class="tag">Très facile</li>
+        <li class="tag">Machine retirée</li>
       </ul>
       <h3><a href="articles/orion.html">Orion</a></h3>
       <p>Un domaine à résoudre localement avant de pouvoir atteindre le site, puis une version vulnérable de telnetd, cve-2026-24061, qui permet un contournement d'authentification</p>
-      <p class="draft">Rapport en cours de rédaction</p>
     </article>
 
     <article class="report">
       <ul class="tags">
         <li class="tag blue">Linux</li>
         <li class="tag">Facile</li>
+        <li class="tag">Machine retirée</li>
       </ul>
       <h3><a href="articles/nexus.html">Nexus</a></h3>
       <p>Un service Gitea exposé, dont un dépôt laisse fuiter des identifiants, puis un service de synchronisation de templates vulnérable au path traversal, qui mène à root</p>
-      <p class="draft">Rapport en cours de rédaction</p>
     </article>
 
     <h2>Le lien avec les cours</h2>

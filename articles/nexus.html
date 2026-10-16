@@ -35,6 +35,7 @@
       <li class="tag blue">Linux</li>
       <li class="tag">Facile</li>
       <li class="tag">Gitea</li>
+      <li class="tag">Machine retirée</li>
     </ul>
     <h1>Nexus</h1>
     <p class="lede">La machine qui rappelle qu'un dépôt Git public n'est pas seulement du code : c'est aussi l'historique de tout ce qu'on y a commité par erreur.</p>
@@ -57,22 +58,83 @@
     </ul>
 
     <h2>Reconnaissance</h2>
-    <p class="draft">En cours de rédaction</p>
+    <p>
+      Le serveur HTTP Nginx redirige vers le domaine <code>nexus.htb</code>, à ajouter dans
+      <code>/etc/hosts</code>. La page de recrutement de l'entreprise fictive donne au passage un
+      contact RH (<code>j.matthew@nexus.htb</code>), utile pour la suite.
+    </p>
 
     <h2>Le dépôt Gitea</h2>
-    <p class="draft">En cours de rédaction</p>
+    <p>
+      Un fuzzing de sous-domaines (vHost) sur <code>nexus.htb</code> révèle deux services
+      additionnels : <code>git.nexus.htb</code>, une instance Gitea, et
+      <code>billing.nexus.htb</code>, un CRM Krayin en version 2.2.0.
+    </p>
+    <pre><code><span class="c"># Découverte des sous-domaines via ffuf</span>
+ffuf -w /usr/share/wordlists/seclists/Discovery/DNS/bitquark-subdomains-top100000.txt:FFUZ \
+  -u http://nexus.htb/ -H 'Host: FFUZ.nexus.htb' -fw 4
+<span class="out">→ git.nexus.htb (200), billing.nexus.htb (200)</span></code></pre>
+    <p>
+      Sur Gitea, le dépôt public <code>admin/krayin-docker-setup</code> expose un fichier
+      <code>.env</code>. Le fichier actuel est propre, mais l'historique des commits ne l'est pas
+      : un ancien commit contient un mot de passe qui a ensuite été retiré du code sans jamais
+      être changé côté application. Parcourir l'historique Git d'un dépôt public fait partie de
+      l'énumération, pas seulement lire le code courant.
+    </p>
 
     <h2>Construire la liste d'utilisateurs</h2>
-    <p class="draft">En cours de rédaction</p>
+    <p>
+      Avec le mot de passe fuité et l'adresse e-mail trouvée sur la page de recrutement, il devient
+      possible de s'authentifier sur le CRM Krayin avec le compte
+      <code>j.matthew@nexus.htb</code>.
+    </p>
 
     <h2>Accès initial</h2>
-    <p class="draft">En cours de rédaction</p>
+    <p>
+      L'éditeur de courriels intégré à Krayin embarque TinyMCE, vulnérable à CVE-2026-38526 : une
+      faille de téléversement de fichier qui permet de déposer un script directement dans un
+      répertoire servi publiquement par le CRM.
+    </p>
+    <pre><code><span class="c"># Téléversement via TinyMCE (POST /admin/tinymce/upload)</span>
+<span class="c"># fichier déposé dans /storage/tinymce/&lt;hash&gt;.php</span>
+curl -s 'http://billing.nexus.htb/storage/tinymce/779bc2392c37c0e8f842b3a6af0a4d8e.php?cmd=id'
+<span class="out">→ uid=33(www-data) gid=33(www-data) groups=33(www-data)</span></code></pre>
 
     <h2>Passage utilisateur puis root</h2>
-    <p class="draft">En cours de rédaction</p>
+    <p>
+      Le fichier <code>/var/www/billing/.env</code>, lisible depuis ce shell www-data, contient
+      cette fois les identifiants de la base de données en cours d'usage. Réutilisés, ils donnent
+      un accès SSH au compte système <code>jones</code>.
+    </p>
+    <p>
+      Sur la machine, un timer systemd (<code>gitea-template-sync.timer</code>) exécute toutes les
+      deux minutes un script, <code>/etc/gitea/template-sync.py</code>, sous l'identité root. Ce
+      script construit des chemins de fichiers avec <code>os.path.join</code> en utilisant
+      directement la sortie brute de <code>git ls-tree</code>, sans filtrer les séquences
+      <code>..</code>. En forgeant un objet Git dont l'arborescence remonte plusieurs niveaux
+      (<code>.. / .. / root / .ssh / authorized_keys</code>) et en le poussant sur le dépôt de
+      template synchronisé, le script root écrit lui-même une clé SSH publique arbitraire dans
+      <code>/root/.ssh/authorized_keys</code>.
+    </p>
+    <pre><code><span class="c"># Forge d'un objet Git avec séquences de traversée relatives,</span>
+<span class="c"># arborescence : tree -> .. -> .. -> root -> .ssh -> authorized_keys</span>
+git push -u origin main --force
+<span class="out">→ clé publique écrite dans /root/.ssh/authorized_keys</span>
+
+ssh -i /tmp/.k root@nexus.htb
+whoami && id
+<span class="out">→ root (uid=0(root) gid=0(root) groups=0(root))</span></code></pre>
 
     <h2>Ce que j'en retiens</h2>
-    <p class="draft">En cours de rédaction</p>
+    <p>
+      La machine entière repose sur des traces qu'on laisse derrière soi : un secret retiré du
+      code mais jamais purgé de l'historique Git, une sortie de commande considérée comme fiable
+      alors qu'elle vient d'un dépôt que n'importe qui peut pousser. Les correctifs vont dans ce
+      sens : restreindre les types de fichiers acceptés par l'upload TinyMCE aux formats image
+      stricts, vérifier dans <code>template-sync.py</code> que le chemin résolu reste confiné au
+      répertoire de staging, et purger l'historique des commits Git avec un outil comme
+      <code>git-filter-repo</code> plutôt que de se contenter de supprimer le fichier en surface.
+    </p>
 
   </main>
 </div>
