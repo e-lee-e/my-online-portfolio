@@ -35,6 +35,7 @@
       <li class="tag blue">Windows</li>
       <li class="tag">Facile</li>
       <li class="tag">Active Directory</li>
+      <li class="tag">Machine retirée</li>
     </ul>
     <h1>Support</h1>
     <p class="lede">La seule machine Windows de la série, et celle qui rejoint le plus mes TP sur Active Directory. On y passe d'un partage ouvert à un contrôle complet du contrôleur de domaine.</p>
@@ -57,22 +58,74 @@
     </ul>
 
     <h2>Reconnaissance</h2>
-    <p class="draft">En cours de rédaction</p>
+    <p>
+      La cible héberge un contrôleur de domaine Active Directory. Comme souvent sur ce type de
+      machine, l'énumération commence par les services d'annuaire et de partage de fichiers
+      plutôt que par un site web.
+    </p>
 
     <h2>Le partage SMB</h2>
-    <p class="draft">En cours de rédaction</p>
+    <p>
+      Un partage public accessible sans authentification contient un exécutable d'inventaire,
+      <code>UserInfo.exe</code>. La décompilation de ce binaire .NET met en évidence une méthode
+      <code>Protected.getPassword()</code> qui reconstruit un mot de passe à partir d'un contenu
+      encodé en Base64, lui-même déchiffré par un double XOR avec une clé statique codée en dur.
+      Le compte de service visé est <code>support\ldap</code>.
+    </p>
+    <p class="note">
+      Un chiffrement « maison » codé en dur côté client n'est pas un mécanisme de sécurité : dès
+      qu'un attaquant a le binaire, il a aussi la clé.
+    </p>
 
     <h2>Récupérer le mot de passe de liaison</h2>
-    <p class="draft">En cours de rédaction</p>
+    <p>
+      Une fois la routine de déchiffrement reconstituée (à la main, en réimplémentant la logique
+      du double XOR, ou en exécutant simplement le binaire dans un environnement contrôlé), le
+      mot de passe du compte <code>support\ldap</code> est en clair.
+    </p>
 
     <h2>Énumération LDAP</h2>
-    <p class="draft">En cours de rédaction</p>
+    <p>
+      Ces identifiants donnent un accès en lecture à l'annuaire. L'inspection des attributs
+      étendus des comptes révèle que l'attribut descriptif <code>info</code> du compte
+      <code>support</code> contient lui aussi son mot de passe en clair — une pratique de stockage
+      très répandue en entreprise et tout aussi dangereuse. Ce compte ouvre une session
+      d'administration à distance via WinRM (port 5985).
+    </p>
+    <pre><code><span class="c"># Constat d'audit</span>
+<span class="out">→ Objet : CN=support,CN=Users,DC=support,DC=htb
+→ Attribut 'info' : mot de passe en clair
+→ Accès obtenu : session WinRM (support\support)</span></code></pre>
 
     <h2>Élévation de privilèges</h2>
-    <p class="draft">En cours de rédaction</p>
+    <p>
+      Une cartographie BloodHound des relations d'accès Active Directory montre que le groupe
+      <strong>Shared Support Accounts</strong> dispose du privilège <code>GenericAll</code> sur
+      l'objet du contrôleur de domaine lui-même. C'est la clé d'une attaque par délégation
+      contrainte basée sur les ressources (RBCD) :
+    </p>
+    <pre><code><span class="c"># Preuve de concept méthodologique RBCD</span>
+1. Exploitation du quota ms-DS-MachineAccountQuota pour créer un compte machine
+2. Définition de msDS-AllowedToActOnBehalfOfOtherIdentity sur le contrôleur de domaine
+3. Forge d'un ticket Kerberos S4U2self / S4U2proxy usurpant Administrator
+4. Exécution distante sous le contexte NT AUTHORITY\SYSTEM</code></pre>
+    <p>
+      Avec <code>GenericAll</code> sur le DC, on peut créer un compte ordinateur (le quota par
+      défaut l'autorise), lui attribuer une délégation contrainte sur le contrôleur de domaine,
+      puis forger une chaîne de tickets Kerberos qui usurpe le compte Administrateur du domaine.
+      Le résultat est une exécution de commandes sous l'identité la plus élevée possible.
+    </p>
 
     <h2>Ce que j'en retiens</h2>
-    <p class="draft">En cours de rédaction</p>
+    <p>
+      Trois défauts d'hygiène Active Directory classiques, empilés : un partage ouvert qui
+      n'aurait pas dû contenir de binaire exposant des secrets, un mot de passe recopié dans un
+      champ texte libre de l'annuaire, et une permission <code>GenericAll</code> accordée sans
+      justification métier sur l'objet le plus sensible du domaine. Les correctifs : ramener
+      <code>ms-DS-MachineAccountQuota</code> à 0, retirer <code>GenericAll</code> au groupe
+      support sur le contrôleur de domaine, et purger les attributs <code>description</code> /
+      <code>info</code> de l'annuaire de tout mot de passe en clair.
+    </p>
 
   </main>
 </div>

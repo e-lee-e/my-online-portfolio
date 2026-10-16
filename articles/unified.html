@@ -57,22 +57,73 @@
     </ul>
 
     <h2>Reconnaissance</h2>
-    <p class="draft">En cours de rédaction</p>
+    <p>
+      Le contrôleur réseau UniFi Network, en version 6.4.54, est exposé sur le port HTTPS 8443.
+      Cette version embarque une version vulnérable d'Apache Log4j, le fameux
+      CVE-2021-44228 (« Log4Shell »).
+    </p>
 
     <h2>Comprendre Log4Shell</h2>
-    <p class="draft">En cours de rédaction</p>
+    <p>
+      Log4j journalise des chaînes de caractères fournies par l'utilisateur sans toujours les
+      traiter comme de simples données. Quand une valeur ressemble à
+      <code>${jndi:ldap://...}</code>, certaines versions vulnérables vont réellement résoudre ce
+      lookup JNDI, c'est-à-dire aller interroger un serveur LDAP distant et charger ce qu'il leur
+      répond. Sur UniFi, le champ visé n'est pas un champ de formulaire visible, mais l'en-tête
+      <code>remember</code> envoyé dans la requête <code>POST /api/login</code>.
+    </p>
 
     <h2>Mise en place</h2>
-    <p class="draft">En cours de rédaction</p>
+    <p>
+      Déclencher la faille nécessite un service qui répond aux lookups JNDI (un serveur LDAP ou
+      HTTP de référence) et un payload qui, une fois résolu, force le serveur Tomcat sous-jacent à
+      instancier un objet sérialisé malveillant.
+    </p>
+    <pre><code><span class="c"># Constat d'audit : injection JNDI sur l'authentification UniFi</span>
+<span class="out">→ Paramètre : 'remember' dans POST /api/login
+→ Mécanisme : résolution JNDI non assainie par Log4j (LDAP)
+→ Preuve : requête de rappel reçue sur le serveur d'écoute</span></code></pre>
 
     <h2>Exploitation</h2>
-    <p class="draft">En cours de rédaction</p>
+    <p>
+      Une fois la charge envoyée dans l'en-tête, Tomcat instancie le processus système porté par
+      l'objet sérialisé, ce qui donne un accès initial interactif sous l'identité de service
+      <code>unifi</code> — un compte non privilégié, mais suffisant pour continuer l'énumération
+      locale.
+    </p>
 
     <h2>Élévation de privilèges</h2>
-    <p class="draft">En cours de rédaction</p>
+    <p>
+      Le serveur héberge une instance MongoDB locale (port 27117, base <code>ace</code>) sans
+      authentification activée. Avec un accès direct en écriture à la collection des
+      administrateurs, il est possible de remplacer le hash SHA-512 du mot de passe administrateur
+      par un hash dont on connaît le mot de passe en clair.
+    </p>
+    <pre><code><span class="c"># Preuve de concept de l'élévation administrative</span>
+1. Calcul d'une empreinte SHA-512 pour un mot de passe choisi
+2. Écriture de l'attribut x_shadow du compte administrator dans MongoDB
+3. Connexion au portail d'administration UniFi avec ce nouveau mot de passe</code></pre>
+    <p>
+      Une fois dans le tableau de bord d'administration, la section de gestion des équipements
+      (« Device Authentication ») affiche en clair le mot de passe root utilisé pour administrer
+      les points d'accès par SSH — et ce même mot de passe est celui du compte root du système
+      lui-même.
+    </p>
+    <pre><code>ssh root@10.129.96.149
+whoami && id
+<span class="out">→ root (uid=0(root) gid=0(root) groups=0(root))</span></code></pre>
 
     <h2>Ce que j'en retiens</h2>
-    <p class="draft">En cours de rédaction</p>
+    <p>
+      C'est la machine qui m'a fait vraiment comprendre pourquoi Log4Shell a eu un tel impact :
+      n'importe quelle chaîne journalisée, même dans un en-tête HTTP anodin, pouvait devenir un
+      point d'entrée. La suite de la chaîne, elle, tient à des pratiques bien plus ordinaires : une
+      base locale sans authentification et un mot de passe affiché en clair dans une interface
+      d'administration. Les correctifs : mettre à jour UniFi Controller vers une version
+      supérieure ou égale à 6.5.55 (qui désactive <code>formatMsgNoLookups</code> par défaut),
+      activer l'authentification sur l'instance MongoDB locale, et chiffrer au repos les mots de
+      passe de gestion des équipements plutôt que de les stocker en clair.
+    </p>
 
   </main>
 </div>

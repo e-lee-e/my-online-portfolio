@@ -57,22 +57,66 @@
     </ul>
 
     <h2>Reconnaissance</h2>
-    <p class="draft">En cours de rédaction</p>
+    <p>
+      Le site reproduit l'ancienne page d'inscription de HackTheBox, protégée par un code
+      d'invitation. Sans ce code, impossible de créer un compte par le formulaire classique.
+    </p>
 
     <h2>Le code d'invitation</h2>
-    <p class="draft">En cours de rédaction</p>
+    <p>
+      Le JavaScript livré au client contient la logique complète de génération du code :
+      l'endpoint <code>/api/v1/invite/how/to/generate</code> explique la marche à suivre, qui
+      repose sur un chiffrement par substitution réversible (ROT13) suivi d'un encodage Base64.
+      En rejouant l'algorithme dans l'autre sens côté client, on génère soi-même un code
+      d'inscription valide, sans jamais avoir eu d'invitation légitime.
+    </p>
+    <p class="note">
+      Tout algorithme exécuté côté client est lisible et rejouable par l'utilisateur : ce n'est
+      jamais un mécanisme de contrôle d'accès.
+    </p>
 
     <h2>Énumération de l'API</h2>
-    <p class="draft">En cours de rédaction</p>
+    <p>
+      Une fois le compte créé, l'énumération des routes de l'API révèle un défaut de contrôle
+      d'accès sur l'endpoint de mise à jour des paramètres,
+      <code>/api/v1/admin/settings/update</code> : rien n'empêche un compte non privilégié de
+      modifier lui-même son propre attribut <code>is_admin</code>.
+    </p>
 
     <h2>Passage administrateur puis shell</h2>
-    <p class="draft">En cours de rédaction</p>
+    <p>
+      Une fois administrateur, la fonctionnalité de génération de profil VPN devient accessible.
+      Elle concatène directement les entrées utilisateur dans un appel système
+      (<code>shell_exec</code> côté PHP), ce qui ouvre la voie à une injection de commande et à
+      l'exécution de code arbitraire sous l'identité <code>www-data</code>.
+    </p>
+    <pre><code><span class="c"># Preuve de concept de l'injection applicative</span>
+1. Élévation vers is_admin=true via l'API de mise à jour des paramètres
+2. Concaténation de commande détectée dans l'export de configuration VPN
+3. Exécution de commandes système, accès confirmé en www-data</code></pre>
 
     <h2>Élévation de privilèges</h2>
-    <p class="draft">En cours de rédaction</p>
+    <p>
+      Le fichier de configuration <code>.env</code> expose les identifiants de la base de
+      données, réutilisés par le compte système <code>admin</code>. Sur cette machine, le noyau
+      Linux (5.15.70, sous Ubuntu Jammy) est vulnérable à CVE-2023-0386, un défaut dans
+      l'implémentation d'OverlayFS/FUSE qui permet à un utilisateur local de se créer un
+      exécutable avec les attributs SUID et d'obtenir un shell root.
+    </p>
+    <pre><code><span class="c"># Constat d'audit sur l'élévation de privilèges noyau</span>
+<span class="out">→ Vulnérabilité : CVE-2023-0386 (OverlayFS/FUSE)
+→ Mécanisme : exécutable SUID créé via l'arborescence FUSE
+→ Résultat : élévation complète vers UID 0</span></code></pre>
 
     <h2>Ce que j'en retiens</h2>
-    <p class="draft">En cours de rédaction</p>
+    <p>
+      TwoMillion enchaîne trois défauts de conception très différents : une logique de sécurité
+      déplacée côté client, un contrôle d'accès absent sur une route d'administration, et une
+      injection de commande dans un appel système. Les correctifs : bannir toute concaténation de
+      données utilisateur dans un appel système, verrouiller le contrôle d'accès de l'API pour
+      interdire l'auto-promotion via <code>is_admin</code>, et appliquer sans délai les correctifs
+      noyau contre CVE-2023-0386.
+    </p>
 
   </main>
 </div>
