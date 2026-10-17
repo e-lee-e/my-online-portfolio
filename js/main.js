@@ -1,9 +1,66 @@
 /* Carnet de cybersécurité, Eg Elisée Lathro
-   Le site fonctionne sans JavaScript. Ce fichier ajoute trois conforts :
-   le menu mobile, les filtres de la page Projets et TP, et le chargement
-   différé des PDF pour ne pas télécharger 20 Mo à l'ouverture de la page. */
+   Le site fonctionne sans JavaScript. Ce fichier ajoute des conforts :
+   la bascule de thème clair/sombre, le menu mobile, les filtres de la
+   page Projets et TP, le chargement différé des PDF pour ne pas
+   télécharger 20 Mo à l'ouverture de la page, l'ombre de la barre de
+   navigation au défilement et quelques apparitions douces au scroll. */
 
 document.addEventListener("DOMContentLoaded", function () {
+
+  /* ---------- Thème clair / sombre ----------
+     Le thème initial est déjà posé par le petit script inline dans
+     <head>, avant le premier rendu, pour éviter un flash de la mauvaise
+     couleur. Ici on ne fait que réagir au clic et mémoriser le choix. */
+
+  var themeToggle = document.querySelector(".theme-toggle");
+
+  if (themeToggle) {
+    themeToggle.addEventListener("click", function () {
+      var root = document.documentElement;
+      var current = root.getAttribute("data-theme") === "light" ? "light" : "dark";
+      var next = current === "light" ? "dark" : "light";
+      root.setAttribute("data-theme", next);
+      try { localStorage.setItem("theme", next); } catch (e) {}
+    });
+  }
+
+  /* ---------- Ombre de la barre de navigation au défilement ---------- */
+
+  var topbar = document.querySelector(".topbar");
+
+  if (topbar) {
+    var onScroll = function () {
+      topbar.classList.toggle("is-scrolled", window.scrollY > 4);
+    };
+    onScroll();
+    window.addEventListener("scroll", onScroll, { passive: true });
+  }
+
+  /* ---------- Apparitions douces au défilement ----------
+     Pure confort visuel : sans JS ou avec un lecteur qui préfère moins
+     de mouvement, le contenu reste simplement visible en permanence. */
+
+  var prefersReducedMotion = window.matchMedia &&
+    window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+
+  if (!prefersReducedMotion && "IntersectionObserver" in window) {
+    var revealEls = document.querySelectorAll(".card, .doc, .report, .callout");
+
+    if (revealEls.length) {
+      revealEls.forEach(function (el) { el.classList.add("reveal"); });
+
+      var io = new IntersectionObserver(function (entries) {
+        entries.forEach(function (entry) {
+          if (entry.isIntersecting) {
+            entry.target.classList.add("in-view");
+            io.unobserve(entry.target);
+          }
+        });
+      }, { threshold: 0.12, rootMargin: "0px 0px -40px 0px" });
+
+      revealEls.forEach(function (el) { io.observe(el); });
+    }
+  }
 
   /* ---------- Menu mobile ---------- */
 
